@@ -9,7 +9,8 @@ import { Issue } from '../models/issue';
 
 interface History {
   issueId: Issue['id'];
-  highlightTime: Date;
+  // redux doesn't encourage putting non-serializable value
+  highlightTime: number;
 }
 
 interface State {
@@ -47,7 +48,7 @@ const highlightIssueCR: CR<Issue['id']> = (state, action) => {
 
   const historyInstance: History = {
     issueId,
-    highlightTime: new Date(),
+    highlightTime: new Date().getTime(),
   };
   const highlightHistory: History[] = [
     historyInstance,
