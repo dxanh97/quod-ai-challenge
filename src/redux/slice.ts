@@ -9,7 +9,7 @@ import {
 import { Issue } from '../models/issue';
 
 interface History {
-  issueId: Issue['id'];
+  issue: Issue;
   // redux doesn't encourage putting non-serializable value
   highlightTime: number;
 }
@@ -49,10 +49,10 @@ const fetchIssues = createAsyncThunk('fetchIssues', async (page: number) => {
 
 type CR<T> = CaseReducer<State, PayloadAction<T>>;
 
-const highlightIssueCR: CR<Issue['id']> = (state, action) => {
-  const issueId = action.payload;
+const highlightIssueCR: CR<Issue> = (state, action) => {
+  const issue = action.payload;
 
-  if (issueId === state.highlightingIssueId) {
+  if (issue.id === state.highlightingIssueId) {
     return {
       ...state,
       highlightingIssueId: undefined,
@@ -60,7 +60,7 @@ const highlightIssueCR: CR<Issue['id']> = (state, action) => {
   }
 
   const historyInstance: History = {
-    issueId,
+    issue,
     highlightTime: new Date().getTime(),
   };
   const highlightHistory: History[] = [
@@ -70,7 +70,7 @@ const highlightIssueCR: CR<Issue['id']> = (state, action) => {
 
   return {
     ...state,
-    highlightingIssueId: issueId,
+    highlightingIssueId: issue.id,
     highlightHistory,
   };
 };

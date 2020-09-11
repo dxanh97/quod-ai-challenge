@@ -6,7 +6,6 @@ import { List, Item, ItemHeader, ItemSubText, Wrapper, Badge } from './styled';
 
 const HighlightHistoryList: React.FC = () => {
   const highlightHistory = useSelector((state) => state.highlightHistory);
-  // const issueList = useSelector((state) => state.issueList);
 
   return (
     <Wrapper>
@@ -17,8 +16,14 @@ const HighlightHistoryList: React.FC = () => {
       <List>
         {highlightHistory.map((instance) => (
           <Item key={instance.highlightTime}>
-            <ItemHeader>{instance.issueId}</ItemHeader>
-            <ItemSubText>{`#${instance.issueId}`}</ItemSubText>
+            <ItemHeader>
+              {new Date(instance.highlightTime).toString()}
+            </ItemHeader>
+            <ItemSubText target="_blank" href={instance.issue.html_url}>
+              {`#${instance.issue.id}`}
+              <br />
+              {instance.issue.title}
+            </ItemSubText>
           </Item>
         ))}
       </List>

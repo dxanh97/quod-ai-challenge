@@ -30,8 +30,8 @@ const IssueList: React.FC = () => {
   const issueList = useSelector((state) => state.issueList);
   const highlightingIssueId = useSelector((state) => state.highlightingIssueId);
   const handleItemClick = useCallback(
-    (id: Issue['id']) => {
-      dispatch(highlightIssue(id));
+    (issue: Issue) => {
+      dispatch(highlightIssue(issue));
     },
     [dispatch],
   );
@@ -41,16 +41,16 @@ const IssueList: React.FC = () => {
         {issueList.map((issue) => (
           <Item
             key={issue.id}
-            onClick={() => handleItemClick(issue.id)}
+            onClick={() => handleItemClick(issue)}
             selected={issue.id === highlightingIssueId}
           >
             <HighlightStar>
               {highlightingIssueId === issue.id && <AiFillStar />}
               {highlightingIssueId !== issue.id && <AiOutlineStar />}
             </HighlightStar>
-            <ItemHeader>{issue.title}</ItemHeader>
+            <ItemHeader>{`#${issue.id}`}</ItemHeader>
             <ItemSubText target="_blank" href={issue.html_url}>
-              {`#${issue.id}`}
+              {issue.title}
             </ItemSubText>
           </Item>
         ))}
