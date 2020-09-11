@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   createSlice,
   createAsyncThunk,
@@ -26,12 +27,24 @@ const initialState: State = {
   highlightHistory: [],
 };
 
+interface Error {
+  message: string;
+  documentation_url: string;
+}
+
 const fetchIssues = createAsyncThunk('fetchIssues', async (page: number) => {
   const response = await fetch(
     `https://api.github.com/repos/rails/rails/issues?page=${page}&per_page=5`,
   );
-  const data = (await response.json()) as Issue[];
-  return data;
+
+  if (response.status === 200) {
+    const data = (await response.json()) as Issue[];
+    return data;
+  }
+
+  const error = (await response.json()) as Error;
+  toast(error.message, { type: 'error' });
+  return [];
 });
 
 type CR<T> = CaseReducer<State, PayloadAction<T>>;
