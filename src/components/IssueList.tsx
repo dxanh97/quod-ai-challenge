@@ -1,35 +1,42 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  AiFillStar,
+  AiOutlineStar,
+  AiOutlineArrowLeft,
+  AiOutlineArrowRight,
+  AiOutlineLoading3Quarters,
+} from 'react-icons/ai';
 
 import { useSelector, useDispatch } from '../redux';
 import { fetchIssues, highlightIssue } from '../redux/slice';
-import { List, Item, HighlightStar, ItemHeader, ItemSubText } from './styled';
+import {
+  Wrapper,
+  List,
+  Item,
+  HighlightStar,
+  ItemHeader,
+  ItemSubText,
+  Button,
+  ListContainer,
+  Label,
+  Dimmer,
+  Rotate,
+} from './styled';
 import { Issue } from '../models/issue';
 
 const IssueList: React.FC = () => {
-  // prettier-ignore
-  const {
-    issueList,
-    getIssuesLoading,
-    highlightingIssueId,
-  } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const [pageIndex, setPageIndex] = useState(1);
-  useEffect(() => {
-    dispatch(fetchIssues(pageIndex));
-  }, [dispatch, pageIndex]);
-
+  const issueList = useSelector((state) => state.issueList);
+  const highlightingIssueId = useSelector((state) => state.highlightingIssueId);
   const handleItemClick = useCallback(
     (id: Issue['id']) => {
       dispatch(highlightIssue(id));
     },
     [dispatch],
   );
-
-  return (
-    <>
-      {getIssuesLoading && 'loading...'}
+  const issueListNode = useMemo(
+    () => (
       <List>
         {issueList.map((issue) => (
           <Item
@@ -48,7 +55,59 @@ const IssueList: React.FC = () => {
           </Item>
         ))}
       </List>
-    </>
+    ),
+    [issueList, highlightingIssueId, handleItemClick],
+  );
+
+  const getIssuesLoading = useSelector((state) => state.getIssuesLoading);
+  const loadingIndicatorNode = useMemo(
+    () => (
+      <Dimmer active={getIssuesLoading}>
+        <Rotate>
+          <AiOutlineLoading3Quarters />
+        </Rotate>
+      </Dimmer>
+    ),
+    [getIssuesLoading],
+  );
+
+  const [pageIndex, setPageIndex] = useState(1);
+  useEffect(() => {
+    dispatch(fetchIssues(pageIndex));
+  }, [dispatch, pageIndex]);
+  const pagingNode = useMemo(
+    () => (
+      <>
+        {pageIndex >= 1 && (
+          <Button
+            disabled={getIssuesLoading}
+            onClick={(): void => setPageIndex((p) => p - 1)}
+          >
+            <AiOutlineArrowLeft />
+            Previous
+          </Button>
+        )}
+        <Button
+          disabled={getIssuesLoading}
+          onClick={(): void => setPageIndex((p) => p + 1)}
+        >
+          Next
+          <AiOutlineArrowRight />
+        </Button>
+        <Label>{`Page: ${pageIndex}`}</Label>
+      </>
+    ),
+    [pageIndex, getIssuesLoading],
+  );
+
+  return (
+    <Wrapper>
+      <ListContainer>
+        {loadingIndicatorNode}
+        {issueListNode}
+      </ListContainer>
+      {pagingNode}
+    </Wrapper>
   );
 };
 

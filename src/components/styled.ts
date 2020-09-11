@@ -1,7 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+export const Wrapper = styled.div`
+  padding: 8px;
+`;
+
+export const ListContainer = styled.div`
+  position: relative;
+`;
 
 export const List = styled.ul`
-  padding: 8px;
+  padding: 0;
   margin: 0;
   list-style-type: none;
 `;
@@ -58,5 +66,64 @@ export const HighlightStar = styled.div`
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
+  }
+`;
+
+export const Dimmer = styled.div`
+  position: absolute;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: rgba(255, 255, 255, 0.55);
+  z-index: 100;
+  display: none;
+  ${(props: { active: boolean }) =>
+    props.active &&
+    css`
+      display: initial;
+    `};
+`;
+
+const rotate = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
+export const Rotate = styled.div`
+  display: inline-flex;
+  animation: ${rotate} 1s linear infinite;
+  font-size: 30px;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+`;
+
+export const Label = styled.span`
+  display: inline-block;
+  vertical-align: baseline;
+  font-weight: 700;
+  color: #a333c8;
+  font-size: 14px;
+  margin-left: 10px;
+`;
+
+export const Button = styled.button`
+  background-color: #a333c8;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  outline: 0;
+  border: none;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin-right: 4px;
+  font-size: 14px;
+  & svg {
+    vertical-align: text-top;
+    margin: 0 4px;
   }
 `;
