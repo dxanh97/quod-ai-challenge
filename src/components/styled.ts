@@ -128,3 +128,21 @@ export const Button = styled.button`
     margin: 0 4px;
   }
 `;
+
+export const FlexWrapper = styled.div`
+  display: inline-flex;
+  width: 100%;
+`;
+export const FlexChildHalf = styled.div`
+  width: 50%;
+`;
+
+export const Badge = styled.span`
+  color: #ffffff;
+  padding: 4px 10px;
+  background-color: #a333c8;
+  font-size: 20px;
+  border-radius: 12px;
+  margin: 0px 8px;
+  position: absolute;
+`;

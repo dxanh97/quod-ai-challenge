@@ -102,6 +102,7 @@ const IssueList: React.FC = () => {
 
   return (
     <Wrapper>
+      <h1>Issue List</h1>
       <ListContainer>
         {loadingIndicatorNode}
         {issueListNode}
