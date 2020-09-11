@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Kumbh+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400');
 
 body {
   margin: 0;
-  font-family: 'Kumbh Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family: 'Inconsolata', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;

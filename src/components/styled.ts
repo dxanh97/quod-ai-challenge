@@ -105,7 +105,7 @@ export const Label = styled.span`
   vertical-align: baseline;
   font-weight: 700;
   color: #a333c8;
-  font-size: 14px;
+  font-size: 16px;
   margin-left: 10px;
 `;
 
@@ -121,7 +121,8 @@ export const Button = styled.button`
   border-radius: 4px;
   padding: 10px 16px;
   margin-right: 4px;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: 'Inconsolata';
   & svg {
     vertical-align: text-top;
     margin: 0 4px;
